@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sunil Dharmadhikari – Chemical Recovery Specialist</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0e1117;
+    --paper: #f5f0e8;
+    --cream: #ede8dc;
+    --rust: #8b3a1e;
+    --rust-light: #c05a35;
+    --gold: #b8842a;
+    --muted: #6b6254;
+    --line: #cfc8b8;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--ink);
+    padding: 80px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    animation: fadeInLeft 1s ease both;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    right: -1px;
+    top: 0;
+    bottom: 0;
+    width: 60px;
+    background: var(--ink);
+    clip-path: polygon(0 0, 100% 15%, 100% 85%, 0 100%);
+  }
+
+  .hero-right {
+    background: var(--cream);
+    padding: 80px 60px 80px 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: fadeInRight 1s ease both;
+    animation-delay: 0.2s;
+  }
+
+  .overline {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rust-light);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 0.5s;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 5vw, 72px);
+    font-weight: 300;
+    color: var(--paper);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 0.6s;
+  }
+
+  .hero-name span {
+    font-weight: 700;
+    color: var(--rust-light);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(16px, 2vw, 22px);
+    font-weight: 300;
+    color: #9e9080;
+    margin-bottom: 40px;
+    letter-spacing: 0.05em;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 0.7s;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--rust);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: expandWidth 0.8s ease forwards;
+    animation-delay: 0.9s;
+  }
+
+  .hero-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 1s;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: #9e9080;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .contact-icon {
+    width: 28px;
+    height: 28px;
+    border: 1px solid #2a2520;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--rust-light);
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* RIGHT SIDE SUMMARY */
+  .experience-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 0.8s;
+  }
+
+  .exp-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 700;
+    color: var(--rust);
+    line-height: 1;
+  }
+
+  .exp-label {
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 1.4;
+  }
+
+  .summary-text {
+    font-size: 15px;
+    line-height: 1.8;
+    color: var(--muted);
+    margin-bottom: 40px;
+    max-width: 480px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 1s;
+  }
+
+  .industry-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+    animation-delay: 1.1s;
+  }
+
+  .tag {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 2px;
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 100px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    letter-spacing: 0.2em;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--line);
+    margin-bottom: 6px;
+  }
+
+  /* ── SKILLS GRID ── */
+  .skills-section {
+    background: var(--ink);
+    padding: 100px 80px;
+  }
+
+  .skills-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .skills-section .section-title { color: var(--paper); }
+  .skills-section .section-line { background: #2a2520; }
+  .skills-section .section-number { color: var(--rust-light); }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 50px;
+  }
+
+  .skill-card {
+    background: #161110;
+    padding: 32px 28px;
+    border-left: 3px solid transparent;
+    transition: border-color 0.3s, transform 0.3s;
+    cursor: default;
+  }
+
+  .skill-card:hover {
+    border-color: var(--rust);
+    transform: translateY(-4px);
+  }
+
+  .skill-card-icon {
+    font-size: 24px;
+    margin-bottom: 16px;
+  }
+
+  .skill-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--paper);
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .skill-card-desc {
+    font-size: 12px;
+    color: #6b6254;
+    line-height: 1.6;
+    font-family: 'DM Mono', monospace;
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    position: relative;
+    padding-left: 40px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 0;
+    width: 1px;
+    background: var(--line);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 56px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -44px;
+    top: 6px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--rust);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--rust);
+  }
+
+  .timeline-dot.current {
+    background: var(--gold);
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--rust);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .timeline-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+
+  .timeline-company {
+    font-size: 14px;
+    color: var(--muted);
+    margin-bottom: 12px;
+    font-weight: 500;
+  }
+
+  .timeline-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* ── COMMISSIONING ── */
+  .commission-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .commission-card {
+    background: var(--cream);
+    padding: 28px 24px;
+    border-bottom: 3px solid var(--line);
+    transition: border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .commission-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--rust);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .commission-card:hover::before { transform: scaleX(1); }
+
+  .commission-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 700;
+    color: var(--line);
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    line-height: 1;
+  }
+
+  .commission-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    padding-right: 40px;
+  }
+
+  .commission-capacity {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--rust);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
+  .commission-vendor {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ── ACHIEVEMENTS ── */
+  .achievements-section {
+    background: var(--rust);
+    padding: 100px 80px;
+  }
+
+  .achievements-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .achievements-section .section-title { color: var(--paper); }
+  .achievements-section .section-line { background: rgba(255,255,255,0.2); }
+  .achievements-section .section-number { color: rgba(255,255,255,0.5); }
+
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-top: 50px;
+  }
+
+  .achievement-item {
+    border-top: 1px solid rgba(255,255,255,0.3);
+    padding-top: 28px;
+  }
+
+  .achievement-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+
+  .achievement-text {
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+  }
+
+  /* ── EDUCATION ── */
+  .edu-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .edu-card {
+    padding: 28px;
+    border: 1px solid var(--line);
+    position: relative;
+    transition: border-color 0.3s;
+  }
+
+  .edu-card:hover { border-color: var(--rust); }
+
+  .edu-degree {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+
+  .edu-school {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  .edu-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    background: var(--cream);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+
+  /* ── LANGUAGES ── */
+  .lang-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 50px;
+  }
+
+  .lang-pill {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 24px;
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--muted);
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .lang-pill:hover { border-color: var(--rust); color: var(--ink); }
+  .lang-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rust); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 60px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .footer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--paper);
+  }
+
+  .footer-tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: #4a4238;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 6px;
+  }
+
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: right;
+  }
+
+  .footer-contact a {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: #6b6254;
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .footer-contact a:hover { color: var(--rust-light); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeInLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes expandWidth {
+    from { opacity: 0; width: 0; }
+    to { opacity: 1; width: 60px; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left::after { display: none; }
+    .hero-right { padding: 60px 40px; }
+    .hero-left { padding: 60px 40px; }
+    .section { padding: 70px 30px; }
+    .skills-section, .achievements-section { padding: 70px 30px; }
+    .skills-grid, .achievements-grid { grid-template-columns: 1fr; }
+    .commission-grid, .edu-grid { grid-template-columns: 1fr; }
+    footer { padding: 40px 30px; flex-direction: column; text-align: center; }
+    .footer-contact { text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="overline">Chemical Recovery Specialist · India</div>
+    <h1 class="hero-name">Sunil<br><span>Dharmadhikari</span></h1>
+    <div class="hero-title">S.M. Dharmadhikari</div>
+    <div class="hero-divider"></div>
+    <div class="hero-contact">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        Shahjahanpur – 242001, Uttar Pradesh, India
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        +91 97601 20387
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉</div>
+        dharma_dhikari@yahoo.com
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🎂</div>
+        24 August 1972
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="experience-badge">
+      <div class="exp-number">30</div>
+      <div class="exp-label">Years of<br>Industry<br>Experience</div>
+    </div>
+    <p class="summary-text">
+      Seasoned Chemical Recovery Specialist with three decades of expertise in the Indian pulp &amp; paper industry. Proven leader in commissioning, operating, and optimising Recovery Boilers, FBR systems, Evaporators, Causticizing Plants, and Lime Kilns across both conventional and non-conventional systems.
+    </p>
+    <div class="industry-tags">
+      <span class="tag">Pulp &amp; Paper</span>
+      <span class="tag">Recovery Boiler</span>
+      <span class="tag">FBR Systems</span>
+      <span class="tag">Causticizing</span>
+      <span class="tag">Lime Kiln</span>
+      <span class="tag">Evaporators</span>
+      <span class="tag">Plant Management</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SKILLS ─── -->
+<section class="skills-section">
+  <div class="skills-inner">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <h2 class="section-title">Core Expertise</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-icon">🔥</div>
+        <div class="skill-card-title">Recovery Boiler Operation</div>
+        <div class="skill-card-desc">Black Liquor Solids firing, start-up & shutdown handling, capacity management up to 700 TPD (Andritz)</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">⚗️</div>
+        <div class="skill-card-title">FBR Operation & Commissioning</div>
+        <div class="skill-card-desc">Copland Fluidized Bed Reactor systems from 80–300 TPD; erection, commissioning & de-fluidization prevention</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">💧</div>
+        <div class="skill-card-title">Evaporator Plant Operation</div>
+        <div class="skill-card-desc">Long Tube Vertical Evaporators (32–230 ton WE); multiple successful commissioning across plants</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">🧪</div>
+        <div class="skill-card-title">Causticizing & White Liquor</div>
+        <div class="skill-card-desc">DORR OLIVER CSP plants (50–120 tons WL); increased production by 20 TPD with existing equipment</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">🏭</div>
+        <div class="skill-card-title">Lime Kiln Operation</div>
+        <div class="skill-card-desc">Enmass India kiln commissioning at 120 MT; full process control and output optimisation</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon">👥</div>
+        <div class="skill-card-title">Team Leadership & Safety</div>
+        <div class="skill-card-desc">Cross-functional coordination, safety compliance, training programs, and continuous improvement culture</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EXPERIENCE ─── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-number">02</span>
+    <h2 class="section-title">Work Experience</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="timeline">
+
+    <div class="timeline-item">
+      <div class="timeline-dot current"></div>
+      <div class="timeline-period">May 2011 – Present · 14+ Years</div>
+      <div class="timeline-role">In-Charge, Chemical Recovery</div>
+      <div class="timeline-company">K.R. Pulp and Paper Ltd. · Shahjahanpur, Uttar Pradesh</div>
+      <div class="timeline-desc">Leading the complete chemical recovery operations including coordination with engineering, purchase, management, and vendors. Spearheaded commissioning of 700 TPD Andritz Recovery Boiler, 230-ton 4F Evaporator, 120-ton Causticizing Plant, and 120 MT Lime Kiln.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Aug 2003 – May 2011 · 8 Years</div>
+      <div class="timeline-role">Chemical Recovery Plant Specialist</div>
+      <div class="timeline-company">Naini Paper Ltd. · Kashipur, Uttarakhand</div>
+      <div class="timeline-desc">Extensive experience in Non-Conventional Chemical Recovery Systems. Successfully erected and commissioned Copland FBR units (100 TPD &amp; 125 TPD) and a 60-ton Long Tube Vertical Evaporator. Contributed to a 70-ton White Liquor Causticizing Plant commissioning.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Sep 1998 – Aug 2003 · 5 Years</div>
+      <div class="timeline-role">Chemical Recovery Engineer</div>
+      <div class="timeline-company">Shreyans Industries Ltd. · Banah, Punjab</div>
+      <div class="timeline-desc">Operated Non-Conventional Chemical Recovery systems, building deep expertise in FBR technologies and non-standard recovery processes in a medium-scale paper manufacturing environment.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Apr 1996 – Aug 1998 · 2 Years</div>
+      <div class="timeline-role">Chemical Recovery Operator</div>
+      <div class="timeline-company">Nath Paper Mills Ltd. · Paithan, Maharashtra</div>
+      <div class="timeline-desc">Gained hands-on experience with Conventional Recovery Boiler systems, building a solid technical foundation in black liquor processing and steam generation.</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">Jan 1994 – Apr 1996 · 2 Years</div>
+      <div class="timeline-role">Trainee – Chemical Recovery</div>
+      <div class="timeline-company">Satpuda Papers Mill Ltd. · P. Nagar, Maharashtra</div>
+      <div class="timeline-desc">Started career as a trainee on Conventional System Boilers, establishing core competencies in chemical recovery fundamentals and plant safety protocols.</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ─── COMMISSIONING ─── -->
+<section class="section" style="background: var(--cream); max-width: 100%; padding: 100px 80px;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <h2 class="section-title">Commissioning Portfolio</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="commission-grid">
+
+      <div class="commission-card">
+        <div class="commission-number">01</div>
+        <div class="commission-title">Recovery Furnace (Conventional)</div>
+        <div class="commission-capacity">125 TPD Black Liquor Solids</div>
+        <div class="commission-vendor">Lignified Boilers India Ltd., Madras</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">02</div>
+        <div class="commission-title">ESP – Electrostatic Precipitator</div>
+        <div class="commission-capacity">Gas Cleaning System</div>
+        <div class="commission-vendor">Voltas</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">03</div>
+        <div class="commission-title">Long Tube Vertical Evaporator</div>
+        <div class="commission-capacity">32 Tons Water Evaporation</div>
+        <div class="commission-vendor">Swetta Engineering Ltd., Chennai</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">04</div>
+        <div class="commission-title">Copland FBR (Non-Conventional)</div>
+        <div class="commission-capacity">80 TPD Black Liquor Solids</div>
+        <div class="commission-vendor">APMPL, Chennai · Successfully Commissioned</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">05</div>
+        <div class="commission-title">Copland FBR – Expanded Capacity</div>
+        <div class="commission-capacity">100 TPD + 125 TPD</div>
+        <div class="commission-vendor">Naini Papers, Kashipur · Erection & Commissioning</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">06</div>
+        <div class="commission-title">Causticizing Plant (DORR OLIVER)</div>
+        <div class="commission-capacity">50 Tons White Liquor Generation</div>
+        <div class="commission-vendor">Successfully Commissioned</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">07</div>
+        <div class="commission-title">Long Tube Vertical Evaporator</div>
+        <div class="commission-capacity">60 Tons Water Evaporation</div>
+        <div class="commission-vendor">Naini Papers · Successfully Commissioned</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">08</div>
+        <div class="commission-title">Copland FBR – Mega Scale</div>
+        <div class="commission-capacity">200 TPD + 300 TPD</div>
+        <div class="commission-vendor">Non-Conventional · Erection & Commissioning</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">09</div>
+        <div class="commission-title">Andritz Recovery Boiler</div>
+        <div class="commission-capacity">700 TPD Black Liquor Fired</div>
+        <div class="commission-vendor">Project Coordination – Engineering, Purchase, Vendors</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">10</div>
+        <div class="commission-title">4F Evaporator (Solution & Tech)</div>
+        <div class="commission-capacity">230 Tons Water Evaporation</div>
+        <div class="commission-vendor">Erection & Commissioning</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">11</div>
+        <div class="commission-title">Causticizing Plant – CSP</div>
+        <div class="commission-capacity">70 Tons + 120 Tons White Liquor</div>
+        <div class="commission-vendor">Successfully Commissioned</div>
+      </div>
+
+      <div class="commission-card">
+        <div class="commission-number">12</div>
+        <div class="commission-title">Lime Kiln (Enmass India Ltd.)</div>
+        <div class="commission-capacity">120 MT Capacity</div>
+        <div class="commission-vendor">Erection & Commissioning</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── ACHIEVEMENTS ─── -->
+<section class="achievements-section">
+  <div class="achievements-inner">
+    <div class="section-header">
+      <span class="section-number">04</span>
+      <h2 class="section-title">Key Achievements</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="achievements-grid">
+      <div class="achievement-item">
+        <div class="achievement-icon">📈</div>
+        <div class="achievement-text">Increased white liquor production by <strong>20 TPD</strong> using existing 100 TPD machinery through process optimisation — no capital investment required.</div>
+      </div>
+      <div class="achievement-item">
+        <div class="achievement-icon">♻️</div>
+        <div class="achievement-text">Implemented green liquor dissolving in weak wash, achieving <strong>48 MTD steam savings</strong> — a significant reduction in energy consumption.</div>
+      </div>
+      <div class="achievement-item">
+        <div class="achievement-icon">⚡</div>
+        <div class="achievement-text">Reduced frequent FBR bed de-fluidization incidents, directly <strong>lowering electrical energy usage</strong> during light-up phases and improving plant uptime.</div>
+      </div>
+      <div class="achievement-item">
+        <div class="achievement-icon">🏗️</div>
+        <div class="achievement-text">Successfully led commissioning of a <strong>700 TPD Andritz Recovery Boiler</strong> — the largest project in career, involving multi-department coordination.</div>
+      </div>
+      <div class="achievement-item">
+        <div class="achievement-icon">🎯</div>
+        <div class="achievement-text">Mastered the <strong>5 Ms framework</strong> (Man, Machine, Material, Method, Money) with implementation of best industry practices for team performance.</div>
+      </div>
+      <div class="achievement-item">
+        <div class="achievement-icon">🌐</div>
+        <div class="achievement-text">Over <strong>30 years</strong> of uninterrupted industry tenure across 5 major paper manufacturing organisations spanning Maharashtra, Punjab, and Uttar Pradesh.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── EDUCATION ─── -->
+<section class="section">
+  <div class="section-header">
+    <span class="section-number">05</span>
+    <h2 class="section-title">Education & Qualifications</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-badge">🎓</div>
+      <div class="edu-degree">Diploma in Chemical Engineering</div>
+      <div class="edu-school">International Council for Management Studies<br>Chennai – 600028</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-badge">🏛️</div>
+      <div class="edu-degree">Bachelor's Degree (Graduation)</div>
+      <div class="edu-school">North Maharashtra University<br>Jalgaon, Maharashtra</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-badge">📘</div>
+      <div class="edu-degree">12th – HSC</div>
+      <div class="edu-school">Maharashtra State Board of Secondary &amp; Higher Secondary Education<br>Pune, Maharashtra</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-badge">📗</div>
+      <div class="edu-degree">10th – SSC</div>
+      <div class="edu-school">Maharashtra State Board of Secondary &amp; Higher Secondary Education<br>Pune, Maharashtra</div>
+    </div>
+  </div>
+
+  <!-- Languages -->
+  <div class="section-header" style="margin-top: 70px; margin-bottom: 0;">
+    <span class="section-number">06</span>
+    <h2 class="section-title" style="font-size: 32px;">Languages</h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="lang-row">
+    <div class="lang-pill"><div class="lang-dot"></div> Marathi</div>
+    <div class="lang-pill"><div class="lang-dot"></div> Hindi</div>
+    <div class="lang-pill"><div class="lang-dot"></div> English</div>
+    <div class="lang-pill"><div class="lang-dot"></div> Gujarati</div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div>
+    <div class="footer-name">Sunil Dharmadhikari</div>
+    <div class="footer-tagline">Chemical Recovery Specialist · 30 Years Experience · India</div>
+  </div>
+  <div class="footer-contact">
+    <a href="tel:+919760120387">+91 97601 20387</a>
+    <a href="mailto:dharma_dhikari@yahoo.com">dharma_dhikari@yahoo.com</a>
+    <a>Shahjahanpur, Uttar Pradesh – 242001</a>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for timeline animations
+  const items = document.querySelectorAll('.timeline-item');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 120);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  items.forEach(item => observer.observe(item));
+</script>
+</body>
+</html>
